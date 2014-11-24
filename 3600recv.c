@@ -70,9 +70,13 @@ int main() {
   t.tv_sec = 30;
   t.tv_usec = 0;
 
+  // TODO: Buffer should be window size
   // our receive buffer
   int buf_len = 1500;
   void* buf = malloc(buf_len);
+
+  // TODO: Send ack with sequence id for proper packet
+  // TODO: will need to put packets in the correct order
 
   // wait to receive, or for a timeout
   while (1) {

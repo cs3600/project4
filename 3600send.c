@@ -136,6 +136,10 @@ int main(int argc, char *argv[]) {
   t.tv_sec = 30;
   t.tv_usec = 0;
 
+
+  // TODO: Determine window size
+  // Set up buffer of window size for 'sent'
+  // Make sure they are acknowledged, otherwise resend on timeout
   while (send_next_packet(sock, out)) {
     int done = 0;
 

@@ -32,7 +32,7 @@ runTest("Medium 0.1 Mb/s 50 ms latency", "--bandwidth 0.1 --latency 50", "--size
 runTest("Large 1 Mb/s, 10 ms latency", "", "--size large");
 runTest("Large 0.5 Mb/s 10 ms latency", "--bandwidth 0.5", "--size large");
 runTest("Large 0.1 Mb/s 500 ms latency", "--bandwidth 0.1 --latency 500", "--size large");
-
+=cut
 print "\nAdvanced tests\n";
 runTest("Small 1Mb/s, 10 ms, 100% duplicate", "--duplicate 100", "--size small");
 runTest("Medium 1Mb/s, 10 ms, 50% reorder 10% drop", "--drop 10 --reorder 50", "--size medium --timeout 10");
@@ -48,7 +48,7 @@ runPerfTest("Huge 5Mb/s, 10 ms", "--bandwidth 5", "--size huge");
 runPerfTest("Large 5Mb/s, 10 ms, 10% drop", "--bandwidth 5 --drop 10", "--size large");
 runPerfTest("Large 10Mb/s, 50 ms, 10% drop", "--bandwidth 10 --drop 10 --latency 50", "--size large");
 runPerfTest("Large 10Mb/s, 25 ms, 10% drop 10% duplicate 20% delay", "--bandwidth 10 --latency 25 --drop 10 --duplicate 10 --delay 20", "--size large");
-
+=cut
 sub runTest {
   my ($problem, $netsim, $args) = @_;
 
