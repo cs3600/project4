@@ -137,11 +137,28 @@ int main(int argc, char *argv[]) {
   t.tv_usec = 0;
 
 
-  // TODO: Determine window size
+  // TODO: Window size should be a constant accessible by both send and receive
+  unsigned int win_size = 8;
   // Set up buffer of window size for 'sent'
+  // Set each index to -1 to represent nothing sent
+	int sent[8] = {-1};
+  // Number of packets sent and not ackowledged
+  int cur_sent = 0;
+
+  
   // Make sure they are acknowledged, otherwise resend on timeout
   while (send_next_packet(sock, out)) {
     int done = 0;
+    // increment the sequence number and the number of currenlty sent
+    sequence++;
+    cur_sent++;
+
+    // continue sending as long as we have room in our window
+    while (cur_sent < win_size) {
+      send_next_packet(sock, out);
+      sequence++;
+      cur_sent++;
+    }
 
     while (! done) {
       FD_ZERO(&socks);
@@ -153,7 +170,7 @@ int main(int argc, char *argv[]) {
         int buf_len = sizeof(buf);
         int received;
         if ((received = recvfrom(sock, &buf, buf_len, 0, (struct sockaddr *) &in, (socklen_t *) &in_len)) < 0) {
-          perror("recvfrom");
+          perror("rec vfrom");
           exit(1);
         }
 
@@ -162,6 +179,7 @@ int main(int argc, char *argv[]) {
         if ((myheader->magic == MAGIC) && (myheader->sequence >= sequence) && (myheader->ack == 1)) {
           mylog("[recv ack] %d\n", myheader->sequence);
           sequence = myheader->sequence;
+          cur_sent--;  // We can now send another packet
           done = 1;
         } else {
           mylog("[recv corrupted ack] %x %d\n", MAGIC, sequence);

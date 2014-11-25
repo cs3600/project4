@@ -32,7 +32,7 @@ runTest("Medium 0.1 Mb/s 50 ms latency", "--bandwidth 0.1 --latency 50", "--size
 runTest("Large 1 Mb/s, 10 ms latency", "", "--size large");
 runTest("Large 0.5 Mb/s 10 ms latency", "--bandwidth 0.5", "--size large");
 runTest("Large 0.1 Mb/s 500 ms latency", "--bandwidth 0.1 --latency 500", "--size large");
-=cut
+=cur
 print "\nAdvanced tests\n";
 runTest("Small 1Mb/s, 10 ms, 100% duplicate", "--duplicate 100", "--size small");
 runTest("Medium 1Mb/s, 10 ms, 50% reorder 10% drop", "--drop 10 --reorder 50", "--size medium --timeout 10");
