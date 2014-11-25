@@ -1,0 +1,16 @@
+Creating a reliable TCP client
+
+For this milestone we implemented a basic window.
+
+Our window size is 8.  We keep track of how many packets we have sent
+and not received acknowledgements back for (cur_sent).  This number is incremented
+on send and decremented on confirmation by an ack from the receiver to
+the sender.  We send packets until our cur_sent is the same as window size.
+Then we wait for responses and continue the above mentioned process.
+
+TODO:
+- Checksum
+- Cache complete sent packets in sender
+- Cache received packets in a buffer at receiver
+  - this only keeps those not in incremental order
+- Improved error handling and checking
