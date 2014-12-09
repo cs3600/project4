@@ -144,3 +144,18 @@ void dump_packet(unsigned char *data, int size) {
         printf("[%4.4s]   %-50.50s  %s\n", addrstr, hexstr, charstr);
     }
 }
+
+/**
+*  Create a checksum for the given data, 
+*  then insert the checksum at the end of the data
+*/
+void create_checksum(unsigned char *data, int size) {
+  // TODO: add actual logic
+  return;
+}
+
+// TODO: get the actual logic in here
+int valid_checksum(unsigned char *data) {
+  // shell now
+  return 1;
+}

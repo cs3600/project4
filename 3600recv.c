@@ -22,6 +22,10 @@
 
 #include "3600sendrecv.h"
 
+// all sequence numbers prior to and inlcuding this
+// number have been received
+int last_rec = -1;
+
 int main() {
   /**
    * I've included some basic code for opening a UDP socket in C, 
@@ -96,31 +100,37 @@ int main() {
       char *data = get_data(buf);
   
       if (myheader->magic == MAGIC) {
-        write(1, data, myheader->length);
+        // Check to see if it the next one we are expecting
+        if (myheader->sequence == (last_rec + 1)) {
+          last_rec++;
+          write(1, data, myheader->length);
 
-        mylog("[recv data] %d (%d) %s\n", myheader->sequence, myheader->length, "ACCEPTED (in-order)");
-        mylog("[send ack] %d\n", myheader->sequence + myheader->length);
+          mylog("[recv data] %d (%d) %s\n", myheader->sequence, myheader->length, "ACCEPTED (in-order)");
+          mylog("[send ack] %d\n", myheader->sequence + myheader->length);
 
-        header *responseheader = make_header(myheader->sequence + myheader->length, 0, myheader->eof, 1);
-        if (sendto(sock, responseheader, sizeof(header), 0, (struct sockaddr *) &in, (socklen_t) sizeof(in)) < 0) {
-          perror("sendto");
-          exit(1);
+          header *responseheader = make_header(myheader->sequence + myheader->length, 0, myheader->eof, 1);
+        
+          if (sendto(sock, responseheader, sizeof(header), 0, (struct sockaddr *) &in, (socklen_t) sizeof(in)) < 0) {
+            perror("sendto");
+            exit(1);
+          }
+
+          if (myheader->eof) {
+            mylog("[recv eof]\n");
+            mylog("[completed]\n");
+            exit(0);
+          }
         }
-
-        if (myheader->eof) {
-          mylog("[recv eof]\n");
-          mylog("[completed]\n");
-          exit(0);
-        }
-      } else {
+      }
+      else {
         mylog("[recv corrupted packet]\n");
       }
-    } else {
+    }    
+    else {
       mylog("[error] timeout occurred\n");
       exit(1);
     }
   }
-
 
   return 0;
 }

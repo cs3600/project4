@@ -27,6 +27,8 @@ header *get_header(void *data);
 char *get_data(void *data);
 char *timestamp();
 void mylog(char *fmt, ...);
+void create_checksum(unsigned char *data, int size);
+int valid_checksum(unsigned char *data);
 
 #endif
 

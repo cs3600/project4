@@ -138,10 +138,10 @@ int main(int argc, char *argv[]) {
 
 
   // TODO: Window size should be a constant accessible by both send and receive
-  unsigned int win_size = 8;
+  unsigned int win_size = 20;
   // Set up buffer of window size for 'sent'
   // Set each index to -1 to represent nothing sent
-	int sent[8] = {-1};
+	int sent[20] = {-1};
   // Number of packets sent and not ackowledged
   int cur_sent = 0;
 
