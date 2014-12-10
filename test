@@ -21,7 +21,6 @@ if (! (-e $RECV)) {
 if (! (-e $RUN)) {
   die("Unable to find executable '$RUN'.");
 }
-=cut
 print "Basic (friendly network) tests\n";
 runTest("Small 1 Mb/s, 10 ms latency", "", "--size small");
 runTest("Small 0.1 Mb/s 10 ms latency", "--bandwidth 0.1", "--size small");
@@ -41,7 +40,7 @@ runTest("Medium 1Mb/s, 10 ms, 50% delay 25% duplicate", "--delay 50 --duplicate 
 runTest("Medium 5Mb/s, 10 ms, 5% delay 5% duplicate 5% drop", "--bandwidth 5 --delay 5 --duplicate 5 --drop 5", "--size medium --timeout 10");
 runTest("Large 1Mb/s, 10 ms, 10% delay 10% duplicate", "--delay 10 --duplicate 10", "--size large --timeout 10");
 runTest("Large 10Mb/s, 10ms, 1% drop 1% duplicate 1% drop", "--bandwidth 10 --delay 1 --drop 1 --duplicate 1", "--size large --timeout 20");
-=cut
+
 print "\nPerformance tests\n";
 unlink("/home/amislove/stats/" . getpwuid($<));
 runPerfTest("Huge 5Mb/s, 10 ms", "--bandwidth 5", "--size huge");
